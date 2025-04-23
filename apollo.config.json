@@ -1,0 +1,13 @@
+{
+    "client": {
+      "name": "local-graphql-client",
+      "service": {
+        "name": "local-graphql-service",
+        "url": "http://localhost:4000/graphql",  
+        "skipSSLValidation": true,
+        "localSchemaFile": "./schema.graphql"
+      },
+      "includes": ["src/**/*.{js,ts,jsx,tsx,graphql}"]
+    }
+  }
+  
