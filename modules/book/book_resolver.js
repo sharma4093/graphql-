@@ -1,23 +1,43 @@
 import bookService from "./book.service.js";
-import { authGuard } from "../../middlewares/auth_middleware.js";
 import logger from "../../utils/logger.js";
+import prisma from "../../database/database.js";
+import LibraryService from "../library/library.service.js";
+
+
 
 const bookResolver = {
     Query: {
-        getBookDetails: async (_, { _id }, { user }) => {
+        getBookDetails: async (_, { id }, { user }) => {
             if (!user) throw new Error('Not authenticated');
-            return await bookService.getBookById(_id);
+            return await bookService.getBookById(id);
         },
 
-        getBooks: async (_, __, { user }) => {
-            try {
-                return await bookService.getAllBooks();
+        getBooks: async (_, args, { user }) => {
+            try {   
+                const page = args.page
+                const size = args.size
+                const skip =( page-1 )* size
+                return await prisma.book.findMany({skip:skip, take:size});
             } catch (error) {
                 logger.error(`Failed to get books: ${error.message}`);
                 throw error;
             }
+        },
+        dummyBooks: async()=>{
+            try {
+                await bookService.dummyData();
+                console.log("Done ");
+                return "books are added"
+            } catch (error) {
+                console.log(error)
+            }
+
         }
     },
+    
+    // Book: {
+    //     book_availibility: (parent) => parent.bookavailibilities
+    // },
     
     Mutation: {
         addBook: async (_, args, { user }) => {
@@ -50,10 +70,10 @@ const bookResolver = {
             }
         },
         
-        deleteBook: async (_, { _id }, { user }) => {
+        deleteBook: async (_, { id }, { user }) => {
             try {
                 if (!user) throw new Error('Not authenticated');
-                return await bookService.deleteBook(_id);
+                return await bookService.deleteBook(id);
             } catch (error) {
                 logger.error(`Failed to delete book: ${error.message}`);
                 throw error;
@@ -66,7 +86,7 @@ const bookResolver = {
                 
                 const bookingData = {
                     ...booking,
-                    user_id: booking.user_id || user._id // Use provided user_id or default to current user
+                    user_id: booking.user_id || user.id // Use provided user_id or default to current user
                 };
                 
                 const result = await bookService.bookTimeSlot(bookingData);
@@ -79,6 +99,16 @@ const bookResolver = {
             } catch (error) {
                 logger.error(`Failed to book: ${error.message}`);
                 throw error;
+            }
+        },
+
+        addBookToLibrary: async(_,args,{user})=>{
+            try {
+                const {library_id, book_id, start_time, end_time} = args
+                
+                return await LibraryService.addBookToLibrary(library_id, book_id, start_time, end_time);
+            } catch (error) {
+                throw error
             }
         }
     }

@@ -12,7 +12,7 @@ const booked_slot_schema = new mongoose.Schema({
         default: null,
         required: true
     }
-}, { _id: false });
+}, { id: false });
 
 const book_schema = new mongoose.Schema({
     book_name: {

@@ -22,13 +22,17 @@ const bookHistorySchema = new mongoose.Schema(
       default: null
     }
   },
-  {timestamps:true,_id:false})
+  {timestamps:true,id:false})
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  role: { type: String, default: 'user' },
+  role: { 
+    type:String, 
+    enum: [0,1],  // 1- amdin , 0- user
+     default: 'user'
+   },
   books_history: [bookHistorySchema]
 },{timeStamps:true});
 

@@ -1,0 +1,31 @@
+{
+  "client": {
+    "name": "Book Booking API Client",
+    "service": {
+      "name": "My Graph",
+      "url": "http://localhost:5000/graphql",
+      "skipSSLValidation": true
+    },
+    "includes": [
+      "./client/**/*.js",
+      "./client/**/*.jsx",
+      "./client/**/*.js", 
+      "./client/**/*.tsx"
+    ]
+  },
+  "service": {
+    "name": "book-booking-api",
+    "localSchemaFile": "./graphql/schema.graphql",
+    "includes": [
+      "./modules/**/*.js",
+      "./modules/**/*.js",
+      "./graphql/*.js",
+      "./graphql/*.js"
+    ],
+    "excludes": [
+      "**/__tests__/**/*",
+      "**/__mocks__/**/*"
+    ]
+  }
+}
+  

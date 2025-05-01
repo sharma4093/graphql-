@@ -1,0 +1,59 @@
+scalar Date
+
+
+input BookInput {
+  book_name: String
+  author: String
+}
+
+input bookBookingInput {
+  book_id: ID!
+  user_id: ID!
+  from_time: Date
+  end_time: Date
+}
+ 
+
+type Book {
+  id: ID
+  book_name: String
+  author: String
+  bookavailibilities: [BookAvailibility]
+
+}
+
+type TimeSlots {
+  from_time: Date
+  end_time: Date
+}
+
+type BookAvailibility {
+  id: ID
+  bookId: ID
+  libsId: ID
+  timeslots: [TimeSlots]
+  libs: Library
+}
+input addBookToLibraryInput {
+  library_id: ID
+  book_id: ID
+  start_time: Date
+  end_time: Date
+}
+
+
+
+type Query {
+  getBookDetails(id:ID): Book
+  getBooks(page:Int, size: Int): [Book]
+  dummyBooks:String
+}
+
+type Mutation {
+  addBook(book_name: String!, author: String!): Book
+  addBooksInBulk(books: [BookInput!]!): Book
+  updateBook(id: ID!, book_name: String!, author: String!): Book
+  deleteBook(id: ID!): String
+  booksBooking(booking: bookBookingInput): Book
+  addBookToLibrary(library_id:ID, book_id:ID, start_time:Date,end_time:Date):Book
+}

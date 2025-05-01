@@ -5,12 +5,13 @@ import logger from "../../utils/logger.js";
 const userResolver = {
   Query: {
     getUserDetails: (_, __, { user }) => {
+      console.log("user from user", user)
       if (!user) throw new Error('Not authenticated');
       return user;
     },
     
     getUsers: async (_, __, { user }) => {
-      if (!user || user.role !== 'admin') throw new Error('Unauthorized');
+      if (!user || user.role !== 1) throw new Error('Unauthorized');
       try {
         return await userService.getAllUsers();
       } catch (error) {
@@ -43,7 +44,7 @@ const userResolver = {
       if (!user) throw new Error('Not authenticated');
       
       try {
-        return await userService.updateUser(user._id, args);
+        return await userService.updateUser(user.id, args);
       } catch (error) {
         logger.error(`Update user failed: ${error.message}`);
         throw error;

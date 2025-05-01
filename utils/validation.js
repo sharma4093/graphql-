@@ -1,13 +1,7 @@
 import Joi from 'joi';
 import { ValidationError } from './error.js';
 
-/**
- * Validate data against a Joi schema
- * @param {Object} data - Data to validate
- * @param {Joi.Schema} schema - Joi validation schema
- * @returns {Object} Validated data
- * @throws {ValidationError} If validation fails
- */
+
 export const validate = (data, schema) => {
   const { error, value } = schema.validate(data, {
     abortEarly: false,
@@ -32,7 +26,7 @@ export const userSchemas = {
   createUser: Joi.object({
     name: Joi.string().required().trim().min(2).max(100),
     email: Joi.string().required().email().lowercase().trim(),
-    password: Joi.string().required().min(6).max(128),
+    password: Joi.string().required().min(6).max(15).message("6<=password<=15 digits "),
   }),
   
   // User login schema
@@ -44,8 +38,8 @@ export const userSchemas = {
   // User update schema
   updateUser: Joi.object({
     name: Joi.string().trim().min(2).max(100),
-    email: Joi.string().email().lowercase().trim(),
-    password: Joi.string().min(6).max(128),
+    role: Joi.number().optional(),
+    isActive: Joi.boolean()
   }).min(1),
 };
 
@@ -59,7 +53,7 @@ export const bookSchemas = {
   
   // Update book schema
   updateBook: Joi.object({
-    _id: Joi.string().required().regex(/^[0-9a-fA-F]{24}$/),
+    id: Joi.string().required().regex(/^[0-9a-fA-F]{24}$/),
     book_name: Joi.string().trim().min(1).max(200),
     author: Joi.string().trim().min(1).max(100),
   }),

@@ -1,9 +1,12 @@
 import jwt from 'jsonwebtoken';
-import { user_model } from "../models/user_models.js"
 import config from '../config/env.js';
 import { AuthenticationError, ForbiddenError } from '../utils/error.js';
 import logger from '../utils/logger.js';
-
+// import {PrismaClient} from "@prisma/client"
+// const prisma = new PrismaClient();
+import pkg from "@prisma/client"
+const {PrismaClient} = pkg
+const prisma  = new PrismaClient();
 
 const auth = async ({ req }) => {
   const authHeader = req.headers.authorization;
@@ -12,7 +15,7 @@ const auth = async ({ req }) => {
   try {
     const token = authHeader.replace('Bearer ', '');
     const decoded = jwt.verify(token, config.jwt.secret);
-    const user = await user_model.findById(decoded.id);
+    const user = await prisma.user.findUnique({where:{id: decoded.id}});
     if (!user) {
       throw new AuthenticationError('User not found');
     }

@@ -15,23 +15,32 @@
     "@apollo/server": "^4.12.0",
     "@apollo/subgraph": "^2.10.2",
     "@apollo/utils.logger": "^3.0.0",
+    "@graphql-tools/load-files": "^7.0.1",
     "@graphql-tools/merge": "^9.0.24",
+    "@graphql-tools/schema": "^10.0.23",
+    "@prisma/client": "^6.6.0",
     "apollo-server": "^3.13.0",
     "bcrypt": "^5.1.1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
+    "dataloader": "^2.2.3",
+    "dotenv": "^16.5.0",
     "express": "^4.21.2",
-    "graphql": "^16.10.0",
+    "graphql-language-service-server": "^2.14.1",
     "graphql-tag": "^2.12.6",
+    "graphql-ws": "^6.0.4",
     "helmet": "^7.1.0",
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
     "morgan": "^1.10.0",
     "npm-check-updates": "^17.1.18",
-    "winston": "^3.11.0"
+    "path": "^0.12.7",
+    "prisma": "^6.6.0",
+    "winston": "^3.11.0",
+    "ws": "^8.18.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "graphql": "^16.11.0",
+    "graphql-config": "^5.1.4",
+    "nodemon": "^3.1.10"
   }
 }

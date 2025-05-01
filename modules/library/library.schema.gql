@@ -1,0 +1,17 @@
+type Library{
+    id: ID
+    name: String 
+    open_timings: String
+}
+
+
+
+type Query{
+    getLibraryDetails(id:ID):Library
+    getLibraries:[Library]
+}
+
+type Mutation{
+    addLibrary(name:String!):Library
+   
+}

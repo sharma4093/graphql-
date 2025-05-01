@@ -1,6 +1,16 @@
-import { mergeTypeDefs } from "@graphql-tools/merge"
-import bookTypeDefs from "../modules/book/book.typeDefs.js"
-import userTypeDefs from "../modules/user/user.typeDefs.js"
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { loadFilesSync } from '@graphql-tools/load-files';
+import { mergeTypeDefs } from '@graphql-tools/merge';
 
-const typeDefs = mergeTypeDefs([bookTypeDefs,userTypeDefs])
+// if type: module ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+// ---
+console.log("__dirName", __dirname)
+
+const typeDefsArray = loadFilesSync(path.join(__dirname, '../modules/**/*.schema.gql'));
+
+const typeDefs = mergeTypeDefs(typeDefsArray);
 export default typeDefs

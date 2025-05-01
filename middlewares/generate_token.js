@@ -4,18 +4,18 @@ import logger from '../utils/logger.js';
 
 /**
  * Generate a JWT token for user authentication
- * @param {Object} user - User object with _id, email, and role
+ * @param {Object} user - User object with id, email, and role
  * @returns {string} JWT token
  */
 const generateToken = (user) => {
   try {
-    if (!user || !user._id) {
+    if (!user || !user.id) {
       throw new Error('Invalid user data for token generation');
     }
     
     // Create payload with minimal necessary information
     const payload = { 
-      id: user._id, 
+      id: user.id, 
       email: user.email, 
       role: user.role 
     };

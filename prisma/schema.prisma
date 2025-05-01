@@ -1,0 +1,102 @@
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://avnadmin:AVNS_gAxlQHS0h-IDh-pP7kQ@pg-3a1d3997-graphql-auth.j.aivencloud.com:18454/defaultdb?sslmode=require"
+}
+
+
+
+
+// User model -----------------------------------------------------
+model User {
+  id Int @id @default(autoincrement())
+  name String 
+  isActive Boolean @default(false)  
+  email String @unique
+  password String
+  role Int @default(0)   // 1:- admin 0:- user
+  createdAt DateTime @default( now())
+  updatedAt DateTime @updatedAt
+  @@map("users")
+}
+// -----------------------------------------------------
+
+
+// book model -----------------------------------------------
+model Book{
+  id Int @id @default(autoincrement())
+  book_name String
+  author String
+  bookavailibilities BookAvailibility[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("books")
+}
+
+// Books' Availability ------------------------------------------------------
+
+model BookAvailibility{
+  id Int @id @default(autoincrement())
+  bookId Int 
+  book Book @relation(fields: [bookId],references: [id])
+  libsId Int
+  libs Library @relation(fields: [libsId], references: [id])
+  timeslots TimeSlots[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("book_availibilities")
+}
+
+//  ----------------------------------------------------
+
+
+
+// Libraries model-----------------------------------------------------
+
+model Library{
+  id Int @id @default(autoincrement())
+  name String
+  open_timings String?
+  bookavailibilities BookAvailibility[]
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("libraries")
+}
+
+// ---------------------------------------------------------------------
+
+
+
+
+// Time slots for the books -----------------------------------------------------
+
+model TimeSlots{
+  id Int @id @default(autoincrement())
+   bAvlId Int
+  bookAvl BookAvailibility @relation(fields: [bAvlId], references: [id])
+  start_time DateTime 
+  end_time DateTime  
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("time_slots")
+}
+
+
+// -----------------------------------------------------------------------------
