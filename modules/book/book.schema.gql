@@ -19,7 +19,7 @@ type Book {
   book_name: String
   author: String
   bookavailibilities: [BookAvailibility]
-
+  
 }
 
 type TimeSlots {
@@ -34,6 +34,7 @@ type BookAvailibility {
   timeslots: [TimeSlots]
   libs: Library
 }
+
 input addBookToLibraryInput {
   library_id: ID
   book_id: ID

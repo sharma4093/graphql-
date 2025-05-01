@@ -1,4 +1,3 @@
-
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -13,7 +12,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://avnadmin:AVNS_gAxlQHS0h-IDh-pP7kQ@pg-3a1d3997-graphql-auth.j.aivencloud.com:18454/defaultdb?sslmode=require"
+  url      = "database-url"
 }
 
 
@@ -30,6 +29,7 @@ model User {
   createdAt DateTime @default( now())
   updatedAt DateTime @updatedAt
   @@map("users")
+  Book Book[] @relation(name: "user-books")
 }
 // -----------------------------------------------------
 
@@ -37,6 +37,8 @@ model User {
 // book model -----------------------------------------------
 model Book{
   id Int @id @default(autoincrement())
+  userId Int 
+  user User @relation(name: "user-books",fields: [userId], references: [id])
   book_name String
   author String
   bookavailibilities BookAvailibility[]

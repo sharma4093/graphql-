@@ -7,8 +7,6 @@ import { mergeTypeDefs } from '@graphql-tools/merge';
 // if type: module ---
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-// ---
-console.log("__dirName", __dirname)
 
 const typeDefsArray = loadFilesSync(path.join(__dirname, '../modules/**/*.schema.gql'));
 

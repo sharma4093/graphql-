@@ -11,7 +11,7 @@ import logger from "./utils/logger.js";
 import { formatError } from "./utils/error.js";
 import {WebSocketServer} from "ws"
 import {createServer} from "http"
-import {userServer} from 'grpahql-ws/lib/use/ws'
+
 
 const app = express();
 
@@ -36,6 +36,7 @@ const server = new ApolloServer({
   resolvers,
   formatError,
   introspection: config.env !== 'production',
+  
 });
 
 await server.start();
